@@ -55,3 +55,6 @@ keymap("n", "<leader>lS", "<cmd>LspStop<CR>", { desc = "Stop LSP" })
 -- Auto Save Session
 keymap("n", "<leader>rr", "<cmd>SessionRestore<CR>", { desc = "Restore session for cwd" })
 keymap("n", "<leader>rs", "<cmd>SessionSave<CR>", { desc = "Save session for auto session root dir" })
+
+-- C++ compile and run
+keymap("n", "<leader>r", ":!g++ % -o %:r && ./%:r<CR>", { desc = "Compile and run current C++ file" })

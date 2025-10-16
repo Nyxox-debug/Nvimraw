@@ -130,5 +130,28 @@ return {
 				},
 			},
 		})
+		lspconfig.pyright.setup({
+			capabilities = capabilities,
+			settings = {
+				python = {
+					analysis = {
+						autoSearchPaths = true,
+						useLibraryCodeForTypes = true,
+						diagnosticMode = "workspace",
+					},
+				},
+			},
+			-- Auto-detect virtual environment
+			before_init = function(_, config)
+				local venv_path = vim.fn.getcwd() .. "/venv/bin/python"
+				local venv_alt_path = vim.fn.getcwd() .. "/.venv/bin/python"
+
+				if vim.fn.executable(venv_path) == 1 then
+					config.settings.python.pythonPath = venv_path
+				elseif vim.fn.executable(venv_alt_path) == 1 then
+					config.settings.python.pythonPath = venv_alt_path
+				end
+			end,
+		})
 	end,
 }
