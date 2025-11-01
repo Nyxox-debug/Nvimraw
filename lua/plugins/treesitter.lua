@@ -36,6 +36,17 @@ return {
 				"query",
 				"vimdoc",
 				"c",
+				"go",
+				"gomod",
+				"gosum",
+				"gowork", -- Go ecosystem
+				"python",
+				"rust",
+				"java",
+				"cpp", -- Other languages
+				"sql",
+				"proto",
+				"toml",
 			},
 			incremental_selection = {
 				enable = true,
