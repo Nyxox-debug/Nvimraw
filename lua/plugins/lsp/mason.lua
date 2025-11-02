@@ -7,6 +7,7 @@ return {
 			-- NOTE: Should match the name in nvim-lspconfig
 			ensure_installed = {
 				"ts_ls",
+        "clangd",
 				"gopls",
 				"html",
 				"cssls",
