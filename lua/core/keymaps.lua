@@ -50,7 +50,7 @@ keymap("n", "sj", "<C-w>j", { desc = "Move focus down"})
 keymap("n", "sl", "<C-w>l", { desc = "Move focus Right"})
 
 -- Keymaps for Cpp 
-keymap("n", "<leader>r", ":terminal g++ % -o /tmp/%< && /tmp/%< <CR>", {desc = "Run cpp program"})
+keymap("n", "<leader>r", ":terminal g++ % -o /tmp/%:t:r && /tmp/%:t:r <CR>", {desc = "Run cpp program"})
 
 -- Word wrap
 keymap("n", "<leader>uw", ":set wrap!<CR>", {desc = "Toogle word wrap"})
