@@ -38,7 +38,16 @@ keymap("n", "<leader>q", ":q<CR>", { desc = "Quit window" })
 keymap("n", "<leader>nh", ":nohl<CR>", { desc = "Clear search highlights" })
 
 -- Window management
-keymap("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" })
-keymap("n", "<leader>ss", "<C-w>s", { desc = "Split window horizontally" })
-keymap("n", "<leader>se", "<C-w>=", { desc = "Make splits equal size" })
-keymap("n", "<leader>sx", "<cmd>close<CR>", { desc = "Close current split" })
+keymap("n", "sv", ":vsplit<Return>", { desc = "Split window vertically" })
+keymap("n", "ss", ":split<Return>", { desc = "Split window horizontally" })
+keymap("n", "se", "<C-w>=", { desc = "Make splits equal size" })
+keymap("n", "sx", "<cmd>close<CR>", { desc = "Close current split" })
+
+-- Move window
+keymap("n", "sh", "<C-w>h", {desc = "Move focus left"})
+keymap("n", "sk", "<C-w>k", {desc = "Move focus up"})
+keymap("n", "sj", "<C-w>j", { desc = "Move focus down"})
+keymap("n", "sl", "<C-w>l", { desc = "Move focus Right"})
+
+-- Keymaps for Cpp 
+keymap("n", "<leader>r", ":terminal g++ % -o %< && ./%< <CR>", {desc = "Run cpp program"})
