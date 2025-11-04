@@ -28,7 +28,7 @@ keymap("n", "dw", 'vb"_d')
 
 -- Normal mode mappings
 keymap("n", "<leader>o", ":update<CR> :source<CR>", { desc = "Save file and reload config" })
-keymap("n", "<leader>pv", function()
+keymap("n", "pv", function()
 	require("oil").open_float()
 end, { desc = "Open Oil in floating window" })
 keymap("n", "<leader>pV", ":Oil<CR>", { desc = "Open Oil in current window" })
