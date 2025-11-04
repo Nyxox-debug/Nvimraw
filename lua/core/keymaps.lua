@@ -54,3 +54,6 @@ keymap("n", "<leader>r", ":terminal g++ % -o /tmp/%:t:r && /tmp/%:t:r <CR>", {de
 
 -- Word wrap
 keymap("n", "<leader>uw", ":set wrap!<CR>", {desc = "Toogle word wrap"})
+
+-- Toggle Term
+keymap("n", "<leader>tt", "<cmd>ToggleTerm direction=float<CR>", { desc = "Floating Terminal" })
