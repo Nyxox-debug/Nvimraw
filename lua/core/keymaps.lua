@@ -57,3 +57,9 @@ keymap("n", "<leader>uw", ":set wrap!<CR>", {desc = "Toogle word wrap"})
 
 -- Toggle Term
 keymap("n", "<leader>tt", "<cmd>ToggleTerm direction=float<CR>", { desc = "Floating Terminal" })
+
+-- Resize splits (w = window)
+keymap("n", "wr", ":vertical resize +5<CR>", { desc = "Resize split right" })
+keymap("n", "wl", ":vertical resize -5<CR>", { desc = "Resize split left" })
+keymap("n", "wk", ":resize +2<CR>", { desc = "Resize split up" })
+keymap("n", "wj", ":resize -2<CR>", { desc = "Resize split down" })
