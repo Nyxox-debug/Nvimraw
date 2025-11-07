@@ -63,3 +63,8 @@ keymap("n", "wr", ":vertical resize +5<CR>", { desc = "Resize split right" })
 keymap("n", "wl", ":vertical resize -5<CR>", { desc = "Resize split left" })
 keymap("n", "wk", ":resize +2<CR>", { desc = "Resize split up" })
 keymap("n", "wj", ":resize -2<CR>", { desc = "Resize split down" })
+
+-- Rename
+keymap("n", "<leader>rn", function()
+  vim.lsp.buf.rename()
+end, { desc = "Rename symbol" })
