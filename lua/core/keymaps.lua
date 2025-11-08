@@ -68,3 +68,7 @@ keymap("n", "wj", ":resize -2<CR>", { desc = "Resize split down" })
 keymap("n", "<leader>rn", function()
   vim.lsp.buf.rename()
 end, { desc = "Rename symbol" })
+
+-- Make Ctrl+Backspace delete a whole word in insert mode
+-- NOTE: This only works for certain terminals, use Ctrl + v Ctrl + Backspace to check
+keymap("i", "<C-BS>", "<C-w>", { desc = "Delete previous word in insert mode" })
