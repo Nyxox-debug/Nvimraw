@@ -42,6 +42,7 @@ keymap("n", "sv", ":vsplit<Return>", { desc = "Split window vertically" })
 keymap("n", "ss", ":split<Return>", { desc = "Split window horizontally" })
 keymap("n", "se", "<C-w>=", { desc = "Make splits equal size" })
 keymap("n", "sx", "<cmd>close<CR>", { desc = "Close current split" })
+keymap("n", "<leader>w", "<C-w>w", { desc = "Jump to next window" }) -- This is mostly for Shift + k, Lsp Hover
 
 -- Move window
 keymap("n", "sh", "<C-w>h", {desc = "Move focus left"})
@@ -49,8 +50,105 @@ keymap("n", "sk", "<C-w>k", {desc = "Move focus up"})
 keymap("n", "sj", "<C-w>j", { desc = "Move focus down"})
 keymap("n", "sl", "<C-w>l", { desc = "Move focus Right"})
 
--- Keymaps for Cpp 
-keymap("n", "<leader>r", ":terminal g++ % -o /tmp/%:t:r && /tmp/%:t:r <CR>", {desc = "Run cpp program"})
+-- Keymap for Nasm
+keymap("n", "<leader>g", ":terminal nasm -felf64 % <CR>", {desc = "Run asm program"})
+
+-- Keymaps for C/Cpp
+-- Run without arguments
+keymap("n", "<leader>r", function()
+  local filetype = vim.bo.filetype
+  
+  if filetype == 'cpp' or filetype == 'c' then
+    local root_dir = vim.fn.getcwd()
+    local build_dir = root_dir .. '/build'
+    
+    if vim.fn.filereadable(root_dir .. '/CMakeLists.txt') == 1 then
+      -- Read CMakeLists.txt to find executable name
+      local cmake_content = vim.fn.readfile(root_dir .. '/CMakeLists.txt')
+      local exec_name = nil
+      
+      for _, line in ipairs(cmake_content) do
+        local match = line:match('add_executable%((%w+)')
+        if match then
+          exec_name = match
+          break
+        end
+      end
+      
+      exec_name = exec_name or vim.fn.fnamemodify(root_dir, ':t')
+      
+      local cmake_commands = string.format(
+        'mkdir -p %s && cd %s && cmake .. && cmake --build . && ./%s',
+        build_dir,
+        build_dir,
+        exec_name
+      )
+      vim.cmd('terminal ' .. cmake_commands)
+    else
+      -- Fall back to single-file compilation
+      local filename = vim.fn.expand('%')
+      local output = '/tmp/' .. vim.fn.expand('%:t:r')
+      
+      if filetype == 'cpp' then
+        vim.cmd('terminal g++ ' .. filename .. ' -o ' .. output .. ' && ' .. output)
+      elseif filetype == 'c' then
+        vim.cmd('terminal gcc ' .. filename .. ' -o ' .. output .. ' && ' .. output)
+      end
+    end
+  else
+    print('Not a C/C++ file')
+  end
+end, {desc = "Run C/C++ program or CMake project"})
+
+-- Run with arguments
+keymap("n", "<leader>R", function()
+  local filetype = vim.bo.filetype
+  
+  if filetype == 'cpp' or filetype == 'c' then
+    local root_dir = vim.fn.getcwd()
+    local build_dir = root_dir .. '/build'
+    
+    -- Prompt for arguments
+    local args = vim.fn.input('Arguments: ')
+    
+    if vim.fn.filereadable(root_dir .. '/CMakeLists.txt') == 1 then
+      -- Read CMakeLists.txt to find executable name
+      local cmake_content = vim.fn.readfile(root_dir .. '/CMakeLists.txt')
+      local exec_name = nil
+      
+      for _, line in ipairs(cmake_content) do
+        local match = line:match('add_executable%((%w+)')
+        if match then
+          exec_name = match
+          break
+        end
+      end
+      
+      exec_name = exec_name or vim.fn.fnamemodify(root_dir, ':t')
+      
+      local cmake_commands = string.format(
+        'mkdir -p %s && cd %s && cmake .. && cmake --build . && ./%s %s',
+        build_dir,
+        build_dir,
+        exec_name,
+        args
+      )
+      vim.cmd('terminal ' .. cmake_commands)
+    else
+      -- Fall back to single-file compilation
+      local filename = vim.fn.expand('%')
+      local output = '/tmp/' .. vim.fn.expand('%:t:r')
+      
+      if filetype == 'cpp' then
+        vim.cmd('terminal g++ ' .. filename .. ' -o ' .. output .. ' && ' .. output .. ' ' .. args)
+      elseif filetype == 'c' then
+        vim.cmd('terminal gcc ' .. filename .. ' -o ' .. output .. ' && ' .. output .. ' ' .. args)
+      end
+    end
+  else
+    print('Not a C/C++ file')
+  end
+end, {desc = "Run C/C++ program with arguments"})
 
 -- Word wrap
 keymap("n", "<leader>uw", ":set wrap!<CR>", {desc = "Toogle word wrap"})
