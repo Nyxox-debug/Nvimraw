@@ -166,3 +166,11 @@ keymap("n", "wj", ":resize -2<CR>", { desc = "Resize split down" })
 keymap("n", "<leader>rn", function()
   vim.lsp.buf.rename()
 end, { desc = "Rename symbol" })
+
+-- Reload nvim
+vim.keymap.set("n", "<leader>so", ":luafile $MYVIMRC<CR>", { desc = "Source init.lua" })
+
+-- Flutter
+keymap("n", "<leader>fR", "<cmd>FlutterRun<CR>", { desc = "Run Flutter Project" })
+keymap("n", "<leader>fr", "<cmd>FlutterReload<CR>", { desc = "Reload Flutter Project" })
+keymap("n", "<leader>fq", "<cmd>FlutterQuit<CR>", { desc = "Quit Flutter Project" })

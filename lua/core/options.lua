@@ -36,3 +36,6 @@ opt.splitbelow = true
 
 -- turn off swapfile
 opt.swapfile = false
+
+-- Disable blinking
+opt.guicursor = "n-v-c:block-Cursor/lCursor"
