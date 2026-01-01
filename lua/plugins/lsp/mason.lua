@@ -7,7 +7,7 @@ return {
 			-- NOTE: Should match the name in nvim-lspconfig
 			ensure_installed = {
 				"ts_ls",
-        "clangd",
+				"clangd",
 				"gopls",
 				"html",
 				"cssls",
@@ -19,7 +19,9 @@ return {
 				"prismals",
 				"pyright",
 				"eslint",
-        "rust_analyzer"
+				"rust_analyzer",
+				"marksman",
+				"tinymist",
 			},
 		},
 		dependencies = {

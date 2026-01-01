@@ -174,3 +174,20 @@ vim.keymap.set("n", "<leader>so", ":luafile $MYVIMRC<CR>", { desc = "Source init
 keymap("n", "<leader>fR", "<cmd>FlutterRun<CR>", { desc = "Run Flutter Project" })
 keymap("n", "<leader>fr", "<cmd>FlutterReload<CR>", { desc = "Reload Flutter Project" })
 keymap("n", "<leader>fq", "<cmd>FlutterQuit<CR>", { desc = "Quit Flutter Project" })
+
+-- Typst
+local typst_job_id = nil
+
+keymap("n", "<leader>tw", function()
+  local filename = vim.fn.expand("%")
+  typst_job_id = vim.fn.jobstart({"typst", "watch", filename})
+  print("Typst watch started for " .. vim.fn.expand("%:t"))
+end, { desc = "Watch current Typst file" })
+
+keymap("n", "<leader>tq", function()
+  if typst_job_id then
+    vim.fn.jobstop(typst_job_id)
+    print("Typst watch stopped")
+    typst_job_id = nil
+  end
+end, { desc = "Stop Typst watch" })
