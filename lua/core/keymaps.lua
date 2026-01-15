@@ -51,7 +51,18 @@ keymap("n", "sj", "<C-w>j", { desc = "Move focus down"})
 keymap("n", "sl", "<C-w>l", { desc = "Move focus Right"})
 
 -- Keymap for Nasm
-keymap("n", "<leader>g", ":terminal nasm -felf64 % <CR>", {desc = "Run asm program"})
+keymap("n", "<leader>g", function()
+  local filename = vim.fn.expand('%:t:r')  -- Get filename without extension
+  local filepath = vim.fn.expand('%:p')     -- Get full path
+  
+  -- Create command that uses /tmp, compiles, links, and runs
+  local cmd = string.format(
+    "cd /tmp && nasm -felf64 %s -o %s.o && ld %s.o -o %s && ./%s; read -p 'Press enter to continue...'",
+    filepath, filename, filename, filename, filename
+  )
+  
+  vim.cmd("terminal " .. cmd)
+end, {desc = "Compile, link and run asm program"})
 
 -- Keymaps for C/Cpp
 -- Run without arguments
