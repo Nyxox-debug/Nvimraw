@@ -5,12 +5,16 @@ function M.setup()
 
   lspconfig.eslint.setup({
     on_attach = function(client, bufnr)
-      -- optional: auto-fix on save
-      vim.api.nvim_create_autocmd("BufWritePre", {
-        buffer = bufnr,
-        command = "EslintFixAll",
-      })
+      -- ❌ disable formatting (important so it doesn't interfere with other formatters)
+      client.server_capabilities.documentFormattingProvider = false
+      client.server_capabilities.documentRangeFormattingProvider = false
     end,
+
+    settings = {
+      format = false,
+      validate = "on",
+      workingDirectory = { mode = "auto" },
+    },
   })
 end
 
